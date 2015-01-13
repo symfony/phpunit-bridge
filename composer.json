@@ -1,0 +1,32 @@
+{
+    "name": "symfony/phpunit-bridge",
+    "type": "symfony-bridge",
+    "description": "Symfony PHPUnit Bridge",
+    "keywords": [],
+    "homepage": "http://symfony.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nicolas Grekas",
+            "email": "p@tchwork.com"
+        },
+        {
+            "name": "Symfony Community",
+            "homepage": "http://symfony.com/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.9"
+    },
+    "autoload": {
+        "files": [ "bootstrap.php" ],
+        "psr-0": { "Symfony\\Bridge\\PhpUnit\\": "" }
+    },
+    "target-dir": "Symfony/Bridge/PhpUnit",
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.7-dev"
+        }
+    }
+}
