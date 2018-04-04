@@ -27,11 +27,11 @@ if (class_exists('PHPUnit_Runner_Version') && version_compare(\PHPUnit_Runner_Ve
         /**
          * {@inheritdoc}
          */
-        protected function handleConfiguration(array &$arguments)
+        protected function handleConfiguration(array &$arguments): void
         {
             $listener = new SymfonyTestsListener();
 
-            $result = parent::handleConfiguration($arguments);
+            parent::handleConfiguration($arguments);
 
             $arguments['listeners'] = isset($arguments['listeners']) ? $arguments['listeners'] : array();
 
@@ -48,8 +48,6 @@ if (class_exists('PHPUnit_Runner_Version') && version_compare(\PHPUnit_Runner_Ve
             if (!$registeredLocally) {
                 $arguments['listeners'][] = $listener;
             }
-
-            return $result;
         }
     }
 }

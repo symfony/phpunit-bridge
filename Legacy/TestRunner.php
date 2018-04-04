@@ -21,11 +21,11 @@ class TestRunner extends \PHPUnit_TextUI_TestRunner
     /**
      * {@inheritdoc}
      */
-    protected function handleConfiguration(array &$arguments)
+    protected function handleConfiguration(array &$arguments): void
     {
         $listener = new SymfonyTestsListenerForV5();
 
-        $result = parent::handleConfiguration($arguments);
+        parent::handleConfiguration($arguments);
 
         $arguments['listeners'] = isset($arguments['listeners']) ? $arguments['listeners'] : array();
 
@@ -42,7 +42,5 @@ class TestRunner extends \PHPUnit_TextUI_TestRunner
         if (!$registeredLocally) {
             $arguments['listeners'][] = $listener;
         }
-
-        return $result;
     }
 }
