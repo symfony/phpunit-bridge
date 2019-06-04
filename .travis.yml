@@ -22,6 +22,5 @@ cache:
 install:
     - travis_retry composer self-update
     - travis_retry composer install --prefer-dist
-    - travis_retry composer info
 
 script: ./vendor/bin/phpunit
