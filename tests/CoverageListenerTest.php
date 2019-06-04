@@ -24,7 +24,7 @@ class CoverageListenerTest extends TestCase
             $php = 'php -d zend_extension=xdebug.so';
         }
 
-        $dir = __DIR__.'/../Tests/Fixtures/coverage';
+        $dir = __DIR__ . '/../tests/Fixtures/coverage';
         $phpunit = $_SERVER['argv'][0];
 
         exec("$php $phpunit -c $dir/phpunit-without-listener.xml.dist $dir/tests/ --coverage-text 2> /dev/null", $output);

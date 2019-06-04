@@ -14,12 +14,12 @@
 
     <testsuites>
         <testsuite name="Symfony PHPUnit Bridge Test Suite">
-            <directory>./Tests/</directory>
-            <directory suffix=".phpt">./Tests/DeprecationErrorHandler/</directory>
+            <directory>./tests/</directory>
+            <directory suffix=".phpt">./tests/DeprecationErrorHandler/</directory>
         </testsuite>
     </testsuites>
 
-    <filter>
+    <!--filter>
         <whitelist>
             <directory>./</directory>
             <exclude>
@@ -27,5 +27,5 @@
                 <directory>./vendor</directory>
             </exclude>
         </whitelist>
-    </filter>
+    </filter-->
 </phpunit>
