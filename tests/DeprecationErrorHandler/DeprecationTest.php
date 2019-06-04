@@ -53,7 +53,7 @@ class DeprecationTest extends TestCase
      * This method is here to simulate the extra level from the piece of code
      * triggering an error to the error handler
      */
-    public function debugBacktrace(): array
+    public function debugBacktrace()
     {
         return debug_backtrace();
     }
