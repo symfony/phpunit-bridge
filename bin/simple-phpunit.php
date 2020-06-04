@@ -149,6 +149,11 @@ $COMPOSER = file_exists($COMPOSER = $oldPwd.'/composer.phar')
     || file_exists($COMPOSER = rtrim('\\' === DIRECTORY_SEPARATOR ? `git rev-parse --show-toplevel 2> NUL` : `git rev-parse --show-toplevel 2> /dev/null`).DIRECTORY_SEPARATOR.'composer.phar')
     ? ('#!/usr/bin/env php' === file_get_contents($COMPOSER, false, null, 0, 18) ? $PHP : '').' '.escapeshellarg($COMPOSER) // detect shell wrappers by looking at the shebang
     : 'composer';
+if (in_array('never', $argv, true) || in_array('--colors=never', $argv, true)) {
+    $COMPOSER .= ' --no-ansi';
+} elseif (in_array('always', $argv, true) || in_array('colors=always', $argv, true)) {
+    $COMPOSER .= ' --ansi';
+}
 
 $SYMFONY_PHPUNIT_REMOVE = $getEnvVar('SYMFONY_PHPUNIT_REMOVE', 'phpspec/prophecy'.($PHPUNIT_VERSION < 6.0 ? ' symfony/yaml' : ''));
 $configurationHash = md5(implode(PHP_EOL, [md5_file(__FILE__), $SYMFONY_PHPUNIT_REMOVE, (int) $PHPUNIT_REMOVE_RETURN_TYPEHINT]));
@@ -165,7 +170,7 @@ if (!file_exists("$PHPUNIT_DIR/$PHPUNIT_VERSION_DIR/phpunit") || $configurationH
     }
 
     $info = [];
-    foreach (explode("\n", `$COMPOSER info --no-ansi -a -n phpunit/phpunit "$PHPUNIT_VERSION.*"`) as $line) {
+    foreach (explode("\n", `$COMPOSER info -a -n phpunit/phpunit "$PHPUNIT_VERSION.*"`) as $line) {
         $line = rtrim($line);
 
         if (!$info && preg_match('/^versions +: /', $line)) {
@@ -183,9 +188,9 @@ if (!file_exists("$PHPUNIT_DIR/$PHPUNIT_VERSION_DIR/phpunit") || $configurationH
     }
 
     if (1 === \count($info['versions'])) {
-        $passthruOrFail("$COMPOSER create-project --ignore-platform-reqs --no-install --prefer-dist --no-scripts --no-plugins --no-progress --ansi -s dev phpunit/phpunit $PHPUNIT_VERSION_DIR \"$PHPUNIT_VERSION.*\"");
+        $passthruOrFail("$COMPOSER create-project --ignore-platform-reqs --no-install --prefer-dist --no-scripts --no-plugins --no-progress -s dev phpunit/phpunit $PHPUNIT_VERSION_DIR \"$PHPUNIT_VERSION.*\"");
     } else {
-        $passthruOrFail("$COMPOSER create-project --ignore-platform-reqs --no-install --prefer-dist --no-scripts --no-plugins --no-progress --ansi phpunit/phpunit $PHPUNIT_VERSION_DIR \"$PHPUNIT_VERSION.*\"");
+        $passthruOrFail("$COMPOSER create-project --ignore-platform-reqs --no-install --prefer-dist --no-scripts --no-plugins --no-progress phpunit/phpunit $PHPUNIT_VERSION_DIR \"$PHPUNIT_VERSION.*\"");
     }
 
     @copy("$PHPUNIT_VERSION_DIR/phpunit.xsd", 'phpunit.xsd');
@@ -215,7 +220,7 @@ if (!file_exists("$PHPUNIT_DIR/$PHPUNIT_VERSION_DIR/phpunit") || $configurationH
     putenv("COMPOSER_ROOT_VERSION=$PHPUNIT_VERSION.99");
     $q = '\\' === DIRECTORY_SEPARATOR ? '"' : '';
     // --no-suggest is not in the list to keep compat with composer 1.0, which is shipped with Ubuntu 16.04LTS
-    $exit = proc_close(proc_open("$q$COMPOSER install --no-dev --prefer-dist --no-progress --ansi$q", [], $p, getcwd()));
+    $exit = proc_close(proc_open("$q$COMPOSER install --no-dev --prefer-dist --no-progress$q", [], $p, getcwd()));
     putenv('COMPOSER_ROOT_VERSION'.(false !== $prevRoot ? '='.$prevRoot : ''));
     if ($exit) {
         exit($exit);
