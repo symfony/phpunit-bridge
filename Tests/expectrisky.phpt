@@ -2,8 +2,8 @@
 Test NoAssertionsTestRisky risky test
 --SKIPIF--
 <?php
-if ('\\' === DIRECTORY_SEPARATOR && !extension_loaded('mbstring')) die('Skipping on Windows without mbstring');
-if (!getenv('SYMFONY_PHPUNIT_VERSION') || version_compare(getenv('SYMFONY_PHPUNIT_VERSION'), '10.0', '>=')) die('Skipping on PHPUnit 10+');
+if ('\\' === DIRECTORY_SEPARATOR && !extension_loaded('mbstring')) echo 'Skipping on Windows without mbstring';
+if (!getenv('SYMFONY_PHPUNIT_VERSION') || version_compare(getenv('SYMFONY_PHPUNIT_VERSION'), '10.0', '>=')) echo 'Skipping on PHPUnit 10+';
 --FILE--
 <?php
 $test =  realpath(__DIR__.'/FailTests/NoAssertionsTestRisky.php');
