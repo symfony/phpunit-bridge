@@ -110,7 +110,7 @@ if ($MAX_PHPUNIT_VERSION && version_compare($MAX_PHPUNIT_VERSION, $PHPUNIT_VERSI
 }
 
 if (version_compare($PHPUNIT_VERSION, '10.0', '>=') && version_compare($PHPUNIT_VERSION, '11.0', '<')) {
-    fwrite(STDERR, 'This script does not work with PHPUnit 10.'.\PHP_EOL);
+    fwrite(\STDERR, 'This script does not work with PHPUnit 10.'.\PHP_EOL);
     exit(1);
 }
 
