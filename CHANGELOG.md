@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+7.3
+---
+
+ * Enable configuring clock and DNS mock namespaces with attributes
+
 7.2
 ---
 
