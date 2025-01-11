@@ -12,6 +12,8 @@
 namespace Symfony\Bridge\PhpUnit\Metadata;
 
 /**
+ * @internal
+ *
  * @template T of object
  */
 final class AttributeReader
