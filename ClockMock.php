@@ -109,6 +109,18 @@ class ClockMock
         return [(int) self::$now, (int) $ns];
     }
 
+    /**
+     * @return false|int
+     */
+    public static function strtotime(string $datetime, ?int $timestamp = null)
+    {
+        if (null === $timestamp) {
+            $timestamp = self::time();
+        }
+
+        return \strtotime($datetime, $timestamp);
+    }
+
     public static function register($class): void
     {
         $self = static::class;
@@ -160,6 +172,11 @@ function gmdate(\$format, \$timestamp = null)
 function hrtime(\$asNumber = false)
 {
     return \\$self::hrtime(\$asNumber);
+}
+
+function strtotime(\$datetime, \$timestamp = null)
+{
+    return \\$self::strtotime(\$datetime, \$timestamp);
 }
 EOPHP
             );
