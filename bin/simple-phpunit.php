@@ -386,6 +386,10 @@ if ('\\' === \DIRECTORY_SEPARATOR) {
     $cmd .= '%2$s';
 }
 
+if (version_compare($PHPUNIT_VERSION, '11.0', '>=')) {
+    $GLOBALS['_composer_autoload_path'] = "$PHPUNIT_DIR/$PHPUNIT_VERSION_DIR/vendor/autoload.php";
+}
+
 if ($components) {
     $skippedTests = $_SERVER['SYMFONY_PHPUNIT_SKIPPED_TESTS'] ?? false;
     $runningProcs = [];

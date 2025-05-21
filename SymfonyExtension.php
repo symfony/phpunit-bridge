@@ -11,6 +11,8 @@
 
 namespace Symfony\Bridge\PhpUnit;
 
+use PHPUnit\Event\Code\Test;
+use PHPUnit\Event\Code\TestMethod;
 use PHPUnit\Event\Test\BeforeTestMethodErrored;
 use PHPUnit\Event\Test\BeforeTestMethodErroredSubscriber;
 use PHPUnit\Event\Test\Errored;
@@ -19,6 +21,7 @@ use PHPUnit\Event\Test\Finished;
 use PHPUnit\Event\Test\FinishedSubscriber;
 use PHPUnit\Event\Test\Skipped;
 use PHPUnit\Event\Test\SkippedSubscriber;
+use PHPUnit\Metadata\Group;
 use PHPUnit\Runner\Extension\Extension;
 use PHPUnit\Runner\Extension\Facade;
 use PHPUnit\Runner\Extension\ParameterCollection;
@@ -50,22 +53,22 @@ class SymfonyExtension implements Extension
         $facade->registerSubscriber(new class implements ErroredSubscriber {
             public function notify(Errored $event): void
             {
-                SymfonyExtension::disableClockMock();
-                SymfonyExtension::disableDnsMock();
+                SymfonyExtension::disableClockMock($event->test());
+                SymfonyExtension::disableDnsMock($event->test());
             }
         });
         $facade->registerSubscriber(new class implements FinishedSubscriber {
             public function notify(Finished $event): void
             {
-                SymfonyExtension::disableClockMock();
-                SymfonyExtension::disableDnsMock();
+                SymfonyExtension::disableClockMock($event->test());
+                SymfonyExtension::disableDnsMock($event->test());
             }
         });
         $facade->registerSubscriber(new class implements SkippedSubscriber {
             public function notify(Skipped $event): void
             {
-                SymfonyExtension::disableClockMock();
-                SymfonyExtension::disableDnsMock();
+                SymfonyExtension::disableClockMock($event->test());
+                SymfonyExtension::disableDnsMock($event->test());
             }
         });
 
@@ -73,8 +76,13 @@ class SymfonyExtension implements Extension
             $facade->registerSubscriber(new class implements BeforeTestMethodErroredSubscriber {
                 public function notify(BeforeTestMethodErrored $event): void
                 {
-                    SymfonyExtension::disableClockMock();
-                    SymfonyExtension::disableDnsMock();
+                    if (method_exists($event, 'test')) {
+                        SymfonyExtension::disableClockMock($event->test());
+                        SymfonyExtension::disableDnsMock($event->test());
+                    } else {
+                        ClockMock::withClockMock(false);
+                        DnsMock::withMockedHosts([]);
+                    }
                 }
             });
         }
@@ -91,16 +99,38 @@ class SymfonyExtension implements Extension
     /**
      * @internal
      */
-    public static function disableClockMock(): void
+    public static function disableClockMock(Test $test): void
     {
-        ClockMock::withClockMock(false);
+        if (self::hasGroup($test, 'time-sensitive')) {
+            ClockMock::withClockMock(false);
+        }
     }
 
     /**
      * @internal
      */
-    public static function disableDnsMock(): void
+    public static function disableDnsMock(Test $test): void
     {
-        DnsMock::withMockedHosts([]);
+        if (self::hasGroup($test, 'dns-sensitive')) {
+            DnsMock::withMockedHosts([]);
+        }
+    }
+
+    /**
+     * @internal
+     */
+    public static function hasGroup(Test $test, string $groupName): bool
+    {
+        if (!$test instanceof TestMethod) {
+            return false;
+        }
+
+        foreach ($test->metadata() as $metadata) {
+            if ($metadata instanceof Group && $groupName === $metadata->groupName()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
