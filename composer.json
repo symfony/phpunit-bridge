@@ -24,7 +24,7 @@
     },
     "require-dev": {
         "symfony/deprecation-contracts": "^2.5|^3.0",
-        "symfony/error-handler": "^5.4|^6.4|^7.0",
+        "symfony/error-handler": "^6.4|^7.0|^8.0",
         "symfony/polyfill-php81": "^1.27"
     },
     "conflict": {
