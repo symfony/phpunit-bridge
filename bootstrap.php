@@ -14,7 +14,11 @@ use Doctrine\Deprecations\Deprecation;
 use Symfony\Bridge\PhpUnit\DeprecationErrorHandler;
 
 // Detect if we need to serialize deprecations to a file.
-if (in_array(\PHP_SAPI, ['cli', 'phpdbg'], true) && $file = getenv('SYMFONY_DEPRECATIONS_SERIALIZE')) {
+if (
+    // Skip if we're using PHPUnit >=10
+    !class_exists(PHPUnit\Metadata\Metadata::class)
+    && in_array(\PHP_SAPI, ['cli', 'phpdbg'], true) && $file = getenv('SYMFONY_DEPRECATIONS_SERIALIZE')
+) {
     DeprecationErrorHandler::collectDeprecations($file);
 
     return;
@@ -46,6 +50,10 @@ if (!class_exists(AnnotationRegistry::class, false) && class_exists(AnnotationRe
     }
 }
 
-if ('disabled' !== getenv('SYMFONY_DEPRECATIONS_HELPER')) {
+if (
+    // Skip if we're using PHPUnit >=10
+    !class_exists(PHPUnit\Metadata\Metadata::class, false)
+    && 'disabled' !== getenv('SYMFONY_DEPRECATIONS_HELPER')
+) {
     DeprecationErrorHandler::register(getenv('SYMFONY_DEPRECATIONS_HELPER'));
 }
