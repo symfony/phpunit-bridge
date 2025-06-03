@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\Deprecations\Deprecation;
 use Symfony\Bridge\PhpUnit\DeprecationErrorHandler;
 
@@ -35,19 +34,6 @@ if (isset($fileIdentifier)) {
 
 if (class_exists(Deprecation::class)) {
     Deprecation::withoutDeduplication();
-
-    if (\PHP_VERSION_ID < 80000) {
-        // Ignore deprecations about the annotation mapping driver when it's not possible to move to the attribute driver yet
-        Deprecation::ignoreDeprecations('https://github.com/doctrine/orm/issues/10098');
-    }
-}
-
-if (!class_exists(AnnotationRegistry::class, false) && class_exists(AnnotationRegistry::class)) {
-    if (method_exists(AnnotationRegistry::class, 'registerUniqueLoader')) {
-        AnnotationRegistry::registerUniqueLoader('class_exists');
-    } elseif (method_exists(AnnotationRegistry::class, 'registerLoader')) {
-        AnnotationRegistry::registerLoader('class_exists');
-    }
 }
 
 if (
