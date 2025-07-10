@@ -19,7 +19,7 @@ use Symfony\Bridge\PhpUnit\SymfonyTestsListener;
 /**
  * @internal
  */
-class CommandForV7 extends BaseCommand
+class CommandForV8 extends BaseCommand
 {
     protected function createRunner(): BaseRunner
     {

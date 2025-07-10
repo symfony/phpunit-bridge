@@ -17,10 +17,7 @@ use Symfony\Bridge\PhpUnit\Attribute\TimeSensitive;
 use Symfony\Bridge\PhpUnit\Metadata\AttributeReader;
 use Symfony\Bridge\PhpUnit\Tests\Metadata\Fixtures\FooBar;
 
-/**
- * @requires PHP 8.0
- */
-final class AttributeReaderTest extends TestCase
+class AttributeReaderTest extends TestCase
 {
     /**
      * @dataProvider provideReadCases
