@@ -351,7 +351,7 @@ class Deprecation
             }
         }
 
-        throw new \RuntimeException(sprintf('No vendors found for path "%s".', $path));
+        throw new \RuntimeException(\sprintf('No vendors found for path "%s".', $path));
     }
 
     /**
