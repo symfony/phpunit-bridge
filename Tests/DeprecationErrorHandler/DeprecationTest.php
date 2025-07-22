@@ -275,7 +275,6 @@ class DeprecationTest extends TestCase
                     $loader = require $v.'/autoload.php';
                     $reflection = new \ReflectionClass($loader);
                     $prop = $reflection->getProperty('prefixDirsPsr4');
-                    $prop->setAccessible(true);
                     $currentValue = $prop->getValue($loader);
                     self::$prefixDirsPsr4[] = [$prop, $loader, $currentValue];
                     $currentValue['Symfony\\Bridge\\PhpUnit\\'] = [realpath(__DIR__.'/../..')];

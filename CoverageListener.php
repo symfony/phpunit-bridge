@@ -86,7 +86,6 @@ class CoverageListener implements TestListener
     private function addCoversForClassToAnnotationCache(Test $test, array $covers): void
     {
         $r = new \ReflectionProperty(TestUtil::class, 'annotationCache');
-        $r->setAccessible(true);
 
         $cache = $r->getValue();
         $cache = array_replace_recursive($cache, [
@@ -103,7 +102,6 @@ class CoverageListener implements TestListener
         $docBlock = Registry::getInstance()->forClassName(\get_class($test));
 
         $symbolAnnotations = new \ReflectionProperty($docBlock, 'symbolAnnotations');
-        $symbolAnnotations->setAccessible(true);
 
         // Exclude internal classes; PHPUnit 9.1+ is picky about tests covering, say, a \RuntimeException
         $covers = array_filter($covers, function (string $class) {
