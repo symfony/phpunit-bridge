@@ -348,7 +348,6 @@ class SymfonyTestsListenerTrait
         }
 
         $r = new \ReflectionProperty($test, 'runTestInSeparateProcess');
-        $r->setAccessible(true);
 
         return $r->getValue($test) ?? false;
     }
