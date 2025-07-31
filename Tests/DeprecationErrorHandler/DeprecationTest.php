@@ -11,6 +11,7 @@
 
 namespace Symfony\Bridge\PhpUnit\Tests\DeprecationErrorHandler;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\PhpUnit\DeprecationErrorHandler;
 use Symfony\Bridge\PhpUnit\DeprecationErrorHandler\Deprecation;
@@ -88,6 +89,7 @@ class DeprecationTest extends TestCase
     /**
      * @dataProvider mutedProvider
      */
+    #[DataProvider('mutedProvider')]
     public function testItMutesOnlySpecificErrorMessagesWhenTheCallingCodeIsInPhpunit($muted, $callingClass, $message)
     {
         $trace = $this->debugBacktrace();
@@ -170,6 +172,7 @@ class DeprecationTest extends TestCase
     /**
      * @dataProvider providerGetTypeDetectsSelf
      */
+    #[DataProvider('providerGetTypeDetectsSelf')]
     public function testGetTypeDetectsSelf(string $expectedType, string $message, string $traceClass, string $file)
     {
         $trace = [
@@ -233,6 +236,7 @@ class DeprecationTest extends TestCase
     /**
      * @dataProvider providerGetTypeUsesRightTrace
      */
+    #[DataProvider('providerGetTypeUsesRightTrace')]
     public function testGetTypeUsesRightTrace(string $expectedType, string $message, array $trace)
     {
         $deprecation = new Deprecation(

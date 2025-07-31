@@ -11,6 +11,7 @@
 
 namespace Symfony\Bridge\PhpUnit\Tests;
 
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresPhpunit;
 use PHPUnit\Framework\TestCase;
 
@@ -22,6 +23,7 @@ use PHPUnit\Framework\TestCase;
  * @runTestsInSeparateProcesses
  */
 #[RequiresPhpunit('<10')]
+#[Group('legacy')]
 class ProcessIsolationTest extends TestCase
 {
     /**
