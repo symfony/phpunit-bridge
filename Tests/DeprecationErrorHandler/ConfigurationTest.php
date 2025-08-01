@@ -11,12 +11,14 @@
 
 namespace Symfony\Bridge\PhpUnit\Tests\DeprecationErrorHandler;
 
+use PHPUnit\Framework\Attributes\RequiresPhpunit;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\PhpUnit\DeprecationErrorHandler\Configuration;
 use Symfony\Bridge\PhpUnit\DeprecationErrorHandler\Deprecation;
 use Symfony\Bridge\PhpUnit\DeprecationErrorHandler\DeprecationGroup;
 use Symfony\Component\ErrorHandler\DebugClassLoader;
 
+#[RequiresPhpunit('<10')]
 class ConfigurationTest extends TestCase
 {
     private $files;
@@ -463,9 +465,6 @@ class ConfigurationTest extends TestCase
         $this->assertEquals(json_encode($expected, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES), file_get_contents($filename));
     }
 
-    /**
-     * @requires PHPUnit < 10
-     */
     public function testBaselineGenerationWithDeprecationTriggeredByDebugClassLoader()
     {
         $filename = $this->createFile();
