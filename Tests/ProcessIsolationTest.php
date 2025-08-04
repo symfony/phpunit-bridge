@@ -13,6 +13,7 @@ namespace Symfony\Bridge\PhpUnit\Tests;
 
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresPhpunit;
+use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -37,7 +38,7 @@ class ProcessIsolationTest extends TestCase
 
     public function testCallingOtherErrorHandler()
     {
-        $this->expectException(\PHPUnit\Framework\Exception::class);
+        $this->expectException(Exception::class);
         $this->expectExceptionMessage('Test that PHPUnit\'s error handler fires.');
 
         trigger_error('Test that PHPUnit\'s error handler fires.', \E_USER_WARNING);
