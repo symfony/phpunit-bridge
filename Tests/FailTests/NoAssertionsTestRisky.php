@@ -11,6 +11,7 @@
 
 namespace Symfony\Bridge\PhpUnit\Tests\FailTests;
 
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresPhpunit;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
@@ -26,9 +27,8 @@ final class NoAssertionsTestRisky extends TestCase
 
     /**
      * Do not remove this test in the next major version.
-     *
-     * @group legacy
      */
+    #[Group('legacy')]
     public function testOne()
     {
         $this->expectNotToPerformAssertions();

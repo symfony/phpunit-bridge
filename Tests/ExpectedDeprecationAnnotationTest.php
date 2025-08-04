@@ -11,6 +11,7 @@
 
 namespace Symfony\Bridge\PhpUnit\Tests;
 
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresPhpunit;
 use PHPUnit\Framework\TestCase;
 
@@ -20,10 +21,9 @@ final class ExpectedDeprecationAnnotationTest extends TestCase
     /**
      * Do not remove this test in the next major versions.
      *
-     * @group legacy
-     *
      * @expectedDeprecation foo
      */
+    #[Group('legacy')]
     public function testOne()
     {
         @trigger_error('foo', \E_USER_DEPRECATED);
@@ -32,11 +32,10 @@ final class ExpectedDeprecationAnnotationTest extends TestCase
     /**
      * Do not remove this test in the next major versions.
      *
-     * @group legacy
-     *
      * @expectedDeprecation foo
      * @expectedDeprecation bar
      */
+    #[Group('legacy')]
     public function testMany()
     {
         @trigger_error('foo', \E_USER_DEPRECATED);

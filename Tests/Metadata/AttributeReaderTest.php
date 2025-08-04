@@ -11,6 +11,7 @@
 
 namespace Symfony\Bridge\PhpUnit\Tests\Metadata;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\PhpUnit\Attribute\DnsSensitive;
 use Symfony\Bridge\PhpUnit\Attribute\TimeSensitive;
@@ -19,9 +20,7 @@ use Symfony\Bridge\PhpUnit\Tests\Metadata\Fixtures\FooBar;
 
 class AttributeReaderTest extends TestCase
 {
-    /**
-     * @dataProvider provideReadCases
-     */
+    #[DataProvider('provideReadCases')]
     public function testAttributesAreRead(string $method, string $attributeClass, array $expected)
     {
         $reader = new AttributeReader();

@@ -11,6 +11,7 @@
 
 namespace Symfony\Bridge\PhpUnit\Tests;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\PhpUnit\ClockMock;
 
@@ -19,6 +20,7 @@ use Symfony\Bridge\PhpUnit\ClockMock;
  *
  * @covers \Symfony\Bridge\PhpUnit\ClockMock
  */
+#[CoversClass(ClockMock::class)]
 class ClockMockTest extends TestCase
 {
     public static function setUpBeforeClass(): void

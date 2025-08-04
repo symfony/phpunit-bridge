@@ -11,17 +11,18 @@
 
 namespace Symfony\Bridge\PhpUnit\Tests;
 
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresPhpunit;
+use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Don't remove this test case, it tests the legacy group.
  *
- * @group legacy
- *
  * @runTestsInSeparateProcesses
  */
 #[RequiresPhpunit('<10')]
+#[Group('legacy')]
 class ProcessIsolationTest extends TestCase
 {
     /**
@@ -35,7 +36,7 @@ class ProcessIsolationTest extends TestCase
 
     public function testCallingOtherErrorHandler()
     {
-        $this->expectException(\PHPUnit\Framework\Exception::class);
+        $this->expectException(Exception::class);
         $this->expectExceptionMessage('Test that PHPUnit\'s error handler fires.');
 
         trigger_error('Test that PHPUnit\'s error handler fires.', \E_USER_WARNING);

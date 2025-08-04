@@ -11,6 +11,7 @@
 
 namespace Symfony\Bridge\PhpUnit\Tests\DeprecationErrorHandler;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\RequiresPhpunit;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\PhpUnit\DeprecationErrorHandler\Configuration;
@@ -194,6 +195,7 @@ class ConfigurationTest extends TestCase
     /**
      * @dataProvider provideItCanBeDisabled
      */
+    #[DataProvider('provideItCanBeDisabled')]
     public function testItCanBeDisabled(string $encodedString, bool $expectedEnabled)
     {
         $configuration = Configuration::fromUrlEncodedString($encodedString);
@@ -240,6 +242,7 @@ class ConfigurationTest extends TestCase
     /**
      * @dataProvider provideDataForToleratesForGroup
      */
+    #[DataProvider('provideDataForToleratesForGroup')]
     public function testToleratesForIndividualGroups(string $deprecationsHelper, array $deprecationsPerType, array $expected)
     {
         $configuration = Configuration::fromUrlEncodedString($deprecationsHelper);

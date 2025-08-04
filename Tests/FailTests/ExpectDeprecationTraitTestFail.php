@@ -11,7 +11,9 @@
 
 namespace Symfony\Bridge\PhpUnit\Tests\FailTests;
 
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresPhpunit;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 
@@ -28,9 +30,8 @@ final class ExpectDeprecationTraitTestFail extends TestCase
 
     /**
      * Do not remove this test in the next major version.
-     *
-     * @group legacy
      */
+    #[Group('legacy')]
     public function testOne()
     {
         $this->expectDeprecation('foo');
@@ -39,11 +40,9 @@ final class ExpectDeprecationTraitTestFail extends TestCase
 
     /**
      * Do not remove this test in the next major version.
-     *
-     * @group legacy
-     *
-     * @runInSeparateProcess
      */
+    #[Group('legacy')]
+    #[RunInSeparateProcess]
     public function testOneInIsolation()
     {
         $this->expectDeprecation('foo');
