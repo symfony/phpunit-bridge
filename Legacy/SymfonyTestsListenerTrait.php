@@ -357,7 +357,9 @@ class SymfonyTestsListenerTrait
         }
 
         $r = new \ReflectionProperty($test, 'runTestInSeparateProcess');
-        $r->setAccessible(true);
+        if (\PHP_VERSION_ID < 80100) {
+            $r->setAccessible(true);
+        }
 
         return $r->getValue($test) ?? false;
     }
