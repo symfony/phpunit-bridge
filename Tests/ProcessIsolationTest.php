@@ -19,6 +19,8 @@ use PHPUnit\Framework\TestCase;
 /**
  * Don't remove this test case, it tests the legacy group.
  *
+ * @group legacy
+ *
  * @runTestsInSeparateProcesses
  */
 #[RequiresPhpunit('<10')]

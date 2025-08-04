@@ -27,6 +27,8 @@ final class NoAssertionsTestRisky extends TestCase
 
     /**
      * Do not remove this test in the next major version.
+     *
+     * @group legacy
      */
     #[Group('legacy')]
     public function testOne()

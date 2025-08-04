@@ -30,6 +30,8 @@ final class ExpectDeprecationTraitTestFail extends TestCase
 
     /**
      * Do not remove this test in the next major version.
+     *
+     * @group legacy
      */
     #[Group('legacy')]
     public function testOne()
@@ -40,6 +42,10 @@ final class ExpectDeprecationTraitTestFail extends TestCase
 
     /**
      * Do not remove this test in the next major version.
+     *
+     * @group legacy
+     *
+     * @runInSeparateProcess
      */
     #[Group('legacy')]
     #[RunInSeparateProcess]

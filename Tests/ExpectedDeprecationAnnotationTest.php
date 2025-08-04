@@ -21,6 +21,8 @@ final class ExpectedDeprecationAnnotationTest extends TestCase
     /**
      * Do not remove this test in the next major versions.
      *
+     * @group legacy
+     *
      * @expectedDeprecation foo
      */
     #[Group('legacy')]
@@ -31,6 +33,8 @@ final class ExpectedDeprecationAnnotationTest extends TestCase
 
     /**
      * Do not remove this test in the next major versions.
+     *
+     * @group legacy
      *
      * @expectedDeprecation foo
      * @expectedDeprecation bar

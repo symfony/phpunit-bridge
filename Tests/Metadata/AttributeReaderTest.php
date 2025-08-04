@@ -20,6 +20,9 @@ use Symfony\Bridge\PhpUnit\Tests\Metadata\Fixtures\FooBar;
 
 class AttributeReaderTest extends TestCase
 {
+    /**
+     * @dataProvider provideReadCases
+     */
     #[DataProvider('provideReadCases')]
     public function testAttributesAreRead(string $method, string $attributeClass, array $expected)
     {
