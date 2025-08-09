@@ -285,30 +285,30 @@ if (!file_exists("$PHPUNIT_DIR/$PHPUNIT_VERSION_DIR/phpunit") || $configurationH
         file_put_contents($alteredFile, $alteredCode);
 
         file_put_contents('phpunit', <<<'EOPHP'
-<?php
+            <?php
 
-define('PHPUNIT_COMPOSER_INSTALL', __DIR__.'/vendor/autoload.php');
-require PHPUNIT_COMPOSER_INSTALL;
+            define('PHPUNIT_COMPOSER_INSTALL', __DIR__.'/vendor/autoload.php');
+            require PHPUNIT_COMPOSER_INSTALL;
 
-if (!class_exists(\SymfonyExcludeListPhpunit::class, false)) {
-    class SymfonyExcludeListPhpunit {}
-}
-if (method_exists(\PHPUnit\Util\ExcludeList::class, 'addDirectory')) {
-    (new PHPUnit\Util\Excludelist())->getExcludedDirectories();
-    PHPUnit\Util\ExcludeList::addDirectory(\dirname((new \ReflectionClass(\SymfonyExcludeListPhpunit::class))->getFileName()));
-    class_exists(\SymfonyExcludeListSimplePhpunit::class, false) && PHPUnit\Util\ExcludeList::addDirectory(\dirname((new \ReflectionClass(\SymfonyExcludeListSimplePhpunit::class))->getFileName()));
-} elseif (method_exists(\PHPUnit\Util\Blacklist::class, 'addDirectory')) {
-    (new PHPUnit\Util\BlackList())->getBlacklistedDirectories();
-    PHPUnit\Util\Blacklist::addDirectory(\dirname((new \ReflectionClass(\SymfonyExcludeListPhpunit::class))->getFileName()));
-    class_exists(\SymfonyExcludeListSimplePhpunit::class, false) && PHPUnit\Util\Blacklist::addDirectory(\dirname((new \ReflectionClass(\SymfonyExcludeListSimplePhpunit::class))->getFileName()));
-} else {
-    PHPUnit\Util\Blacklist::$blacklistedClassNames['SymfonyExcludeListPhpunit'] = 1;
-    PHPUnit\Util\Blacklist::$blacklistedClassNames['SymfonyExcludeListSimplePhpunit'] = 1;
-}
+            if (!class_exists(\SymfonyExcludeListPhpunit::class, false)) {
+                class SymfonyExcludeListPhpunit {}
+            }
+            if (method_exists(\PHPUnit\Util\ExcludeList::class, 'addDirectory')) {
+                (new PHPUnit\Util\Excludelist())->getExcludedDirectories();
+                PHPUnit\Util\ExcludeList::addDirectory(\dirname((new \ReflectionClass(\SymfonyExcludeListPhpunit::class))->getFileName()));
+                class_exists(\SymfonyExcludeListSimplePhpunit::class, false) && PHPUnit\Util\ExcludeList::addDirectory(\dirname((new \ReflectionClass(\SymfonyExcludeListSimplePhpunit::class))->getFileName()));
+            } elseif (method_exists(\PHPUnit\Util\Blacklist::class, 'addDirectory')) {
+                (new PHPUnit\Util\BlackList())->getBlacklistedDirectories();
+                PHPUnit\Util\Blacklist::addDirectory(\dirname((new \ReflectionClass(\SymfonyExcludeListPhpunit::class))->getFileName()));
+                class_exists(\SymfonyExcludeListSimplePhpunit::class, false) && PHPUnit\Util\Blacklist::addDirectory(\dirname((new \ReflectionClass(\SymfonyExcludeListSimplePhpunit::class))->getFileName()));
+            } else {
+                PHPUnit\Util\Blacklist::$blacklistedClassNames['SymfonyExcludeListPhpunit'] = 1;
+                PHPUnit\Util\Blacklist::$blacklistedClassNames['SymfonyExcludeListSimplePhpunit'] = 1;
+            }
 
-Symfony\Bridge\PhpUnit\TextUI\Command::main();
+            Symfony\Bridge\PhpUnit\TextUI\Command::main();
 
-EOPHP
+            EOPHP
         );
     }
 
