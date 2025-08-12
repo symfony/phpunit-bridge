@@ -165,7 +165,7 @@ $COMPOSER = ($COMPOSER = getenv('COMPOSER_BINARY'))
 $prevCacheDir = getenv('COMPOSER_CACHE_DIR');
 if ($prevCacheDir) {
     if (false === $absoluteCacheDir = realpath($prevCacheDir)) {
-        @mkdir($prevCacheDir, 0777, true);
+        @mkdir($prevCacheDir, 0o777, true);
         $absoluteCacheDir = realpath($prevCacheDir);
     }
     if ($absoluteCacheDir) {
@@ -181,7 +181,7 @@ $PHPUNIT_VERSION_DIR = sprintf('phpunit-%s-%d', $PHPUNIT_VERSION, $PHPUNIT_REMOV
 if (!file_exists("$PHPUNIT_DIR/$PHPUNIT_VERSION_DIR/phpunit") || $configurationHash !== @file_get_contents("$PHPUNIT_DIR/.$PHPUNIT_VERSION_DIR.md5")) {
     // Build a standalone phpunit without symfony/yaml nor prophecy by default
 
-    @mkdir($PHPUNIT_DIR, 0777, true);
+    @mkdir($PHPUNIT_DIR, 0o777, true);
     chdir($PHPUNIT_DIR);
     if (file_exists("$PHPUNIT_VERSION_DIR")) {
         passthru(sprintf('\\' === \DIRECTORY_SEPARATOR ? 'rmdir /S /Q %s 2> NUL' : 'rm -rf %s', escapeshellarg("$PHPUNIT_VERSION_DIR.old")));
