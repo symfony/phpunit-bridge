@@ -271,8 +271,8 @@ if (!file_exists("$PHPUNIT_DIR/$PHPUNIT_VERSION_DIR/phpunit") || $configurationH
     }
 
     // Mutate PhptTestCase code
-    $alteredCode = file_get_contents($alteredFile = is_file('./src/Runner/PHPT/PhptTestCase.php') ? './src/Runner/PHPT/PhptTestCase.php' : './src/Runner/PhptTestCase.php');
-    if (str_contains($alteredCode, "            'report_memleaks=0',\n")) {
+    $alteredFile = defined('GLOB_BRACE') ? glob('./src/Runner/{Phpt/,PHPT/Phpt,Phpt}TestCase.php', GLOB_BRACE) : false;
+    if ($alteredFile && str_contains($alteredCode = file_get_contents($alteredFile)[0], "            'report_memleaks=0',\n")) {
         $alteredCode = str_replace("            'report_memleaks=0',\n", '', $alteredCode);
         file_put_contents($alteredFile, $alteredCode);
     }
