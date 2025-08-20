@@ -270,7 +270,8 @@ if (!file_exists("$PHPUNIT_DIR/$PHPUNIT_VERSION_DIR/phpunit") || $configurationH
         exit($exit);
     }
 
-    $alteredCode = file_get_contents($alteredFile = './src/Runner/PhptTestCase.php');
+    // Mutate PhptTestCase code
+    $alteredCode = file_get_contents($alteredFile = is_file('./src/Runner/PHPT/PhptTestCase.php') ? './src/Runner/PHPT/PhptTestCase.php' : './src/Runner/PhptTestCase.php');
     if (str_contains($alteredCode, "            'report_memleaks=0',\n")) {
         $alteredCode = str_replace("            'report_memleaks=0',\n", '', $alteredCode);
         file_put_contents($alteredFile, $alteredCode);
@@ -282,8 +283,6 @@ if (!file_exists("$PHPUNIT_DIR/$PHPUNIT_VERSION_DIR/phpunit") || $configurationH
         if ($PHPUNIT_REMOVE_RETURN_TYPEHINT) {
             $alteredCode = preg_replace('/^    ((?:protected|public)(?: static)? function \w+\(\)): void/m', '    $1', $alteredCode);
         }
-        $alteredCode = preg_replace('/abstract class TestCase[^\{]+\{/', '$0 '.\PHP_EOL."    use \Symfony\Bridge\PhpUnit\Legacy\PolyfillTestCaseTrait;", $alteredCode, 1);
-        file_put_contents($alteredFile, $alteredCode);
 
         // Mutate Assert code
         $alteredCode = file_get_contents($alteredFile = './src/Framework/Assert.php');
