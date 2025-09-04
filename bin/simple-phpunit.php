@@ -191,7 +191,7 @@ if (!file_exists("$PHPUNIT_DIR/$PHPUNIT_VERSION_DIR/phpunit") || $configurationH
     }
 
     $info = [];
-    foreach (explode("\n", `$COMPOSER info --no-ansi -a -n phpunit/phpunit "$PHPUNIT_VERSION.*"`) as $line) {
+    foreach (explode("\n", shell_exec("$COMPOSER info --no-ansi -a -n phpunit/phpunit \"$PHPUNIT_VERSION.*\"")) as $line) {
         $line = rtrim($line);
 
         if (!$info && preg_match('/^versions +: /', $line)) {
