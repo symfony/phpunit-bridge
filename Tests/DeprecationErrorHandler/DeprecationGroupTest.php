@@ -5,6 +5,9 @@ namespace Symfony\Bridge\PhpUnit\Tests\DeprecationErrorHandler;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\PhpUnit\DeprecationErrorHandler\DeprecationGroup;
 
+/**
+ * @requires PHPUnit < 10
+ */
 final class DeprecationGroupTest extends TestCase
 {
     public function testItGroupsByMessage()

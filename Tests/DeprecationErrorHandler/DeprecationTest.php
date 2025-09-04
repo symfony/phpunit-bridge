@@ -16,6 +16,9 @@ use Symfony\Bridge\PhpUnit\DeprecationErrorHandler;
 use Symfony\Bridge\PhpUnit\DeprecationErrorHandler\Deprecation;
 use Symfony\Bridge\PhpUnit\Legacy\SymfonyTestsListenerForV7;
 
+/**
+ * @requires PHPUnit < 10
+ */
 class DeprecationTest extends TestCase
 {
     private static $vendorDir;
