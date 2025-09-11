@@ -306,7 +306,7 @@ class SymfonyTestsListenerTrait
         }
 
         if (self::$expectedDeprecations) {
-            if (!\in_array($test->getStatus(), [BaseTestRunner::STATUS_SKIPPED, BaseTestRunner::STATUS_INCOMPLETE], true)) {
+            if (!$test instanceof TestCase || !\in_array($test->getStatus(), [BaseTestRunner::STATUS_SKIPPED, BaseTestRunner::STATUS_INCOMPLETE], true)) {
                 $test->addToAssertionCount(\count(self::$expectedDeprecations));
             }
 
