@@ -17,6 +17,7 @@ use PHPUnit\Framework\RiskyTestError;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestSuite;
 use PHPUnit\Runner\BaseTestRunner;
+use PHPUnit\Runner\PhptTestCase;
 use PHPUnit\Util\Blacklist;
 use PHPUnit\Util\ExcludeList;
 use PHPUnit\Util\Test;
@@ -197,6 +198,12 @@ class SymfonyTestsListenerTrait
 
     public function startTest($test): void
     {
+        if (-2 < $this->state && $test instanceof PhptTestCase) {
+            $this->runsInSeparateProcess = tempnam(sys_get_temp_dir(), 'deprec');
+            putenv('SYMFONY_DEPRECATIONS_SERIALIZE='.$this->runsInSeparateProcess);
+            putenv('SYMFONY_EXPECTED_DEPRECATIONS_SERIALIZE='.tempnam(sys_get_temp_dir(), 'expectdeprec'));
+        }
+
         if (-2 < $this->state && $test instanceof TestCase) {
             // This event is triggered before the test is re-run in isolation
             if ($this->willBeIsolated($test)) {
