@@ -280,9 +280,9 @@ class SymfonyTestsListenerTrait
 
         if ($this->checkNumAssertions) {
             $assertions = \count(self::$expectedDeprecations) + $test->getNumAssertions();
-            if ($test->doesNotPerformAssertions() && $assertions > 0) {
+            if ($test instanceof TestCase && $test->doesNotPerformAssertions() && $assertions > 0) {
                 $test->getTestResultObject()->addFailure($test, new RiskyTestError(sprintf('This test is annotated with "@doesNotPerformAssertions", but performed %s assertions', $assertions)), $time);
-            } elseif ($assertions === 0 && !$test->doesNotPerformAssertions() && $test->getTestResultObject()->noneSkipped()) {
+            } elseif ($test instanceof TestCase && $assertions === 0 && !$test->doesNotPerformAssertions() && $test->getTestResultObject()->noneSkipped()) {
                 $test->getTestResultObject()->addFailure($test, new RiskyTestError('This test did not perform any assertions'), $time);
             }
 
@@ -312,9 +312,9 @@ class SymfonyTestsListenerTrait
 
             restore_error_handler();
 
-            if (!\in_array('legacy', $groups, true)) {
+            if ($test instanceof TestCase && !\in_array('legacy', $groups, true)) {
                 $test->getTestResultObject()->addError($test, new AssertionFailedError('Only tests with the "@group legacy" annotation can expect a deprecation.'), 0);
-            } elseif (!\in_array($test->getStatus(), [BaseTestRunner::STATUS_SKIPPED, BaseTestRunner::STATUS_INCOMPLETE, BaseTestRunner::STATUS_FAILURE, BaseTestRunner::STATUS_ERROR], true)) {
+            } elseif ($test instanceof TestCase && !\in_array($test->getStatus(), [BaseTestRunner::STATUS_SKIPPED, BaseTestRunner::STATUS_INCOMPLETE, BaseTestRunner::STATUS_FAILURE, BaseTestRunner::STATUS_ERROR], true)) {
                 try {
                     $prefix = "@expectedDeprecation:\n";
                     $test->assertStringMatchesFormat($prefix.'%A  '.implode("\n%A  ", self::$expectedDeprecations)."\n%A", $prefix.'  '.implode("\n  ", self::$gatheredDeprecations)."\n");
