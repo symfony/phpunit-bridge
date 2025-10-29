@@ -13,7 +13,7 @@ use Doctrine\Deprecations\Deprecation;
 use Symfony\Bridge\PhpUnit\DeprecationErrorHandler;
 
 // Skip if we're using PHPUnit >=10
-if (class_exists(PHPUnit\Metadata\Metadata::class, false)) {
+if (class_exists(PHPUnit\Metadata\Metadata::class)) {
     return;
 }
 
