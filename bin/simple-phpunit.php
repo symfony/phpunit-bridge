@@ -276,6 +276,7 @@ if (!file_exists("$PHPUNIT_DIR/$PHPUNIT_VERSION_DIR/phpunit") || $configurationH
         if ($PHPUNIT_REMOVE_RETURN_TYPEHINT) {
             $alteredCode = preg_replace('/^    ((?:protected|public)(?: static)? function \w+\(\)): void/m', '    $1', $alteredCode);
         }
+        file_put_contents($alteredFile, $alteredCode);
 
         // Mutate Assert code
         $alteredCode = file_get_contents($alteredFile = './src/Framework/Assert.php');
