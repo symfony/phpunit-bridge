@@ -33,15 +33,15 @@ $getEnvVar = static function ($name, $default = false) use ($argv) {
             if (!$probableConfig) {
                 return null;
             }
+
             if (is_dir($probableConfig)) {
-                return $getPhpUnitConfig($probableConfig.\DIRECTORY_SEPARATOR.'phpunit.xml');
+                return $getPhpUnitConfig($probableConfig.\DIRECTORY_SEPARATOR.'phpunit');
             }
 
-            if (file_exists($probableConfig)) {
-                return $probableConfig;
-            }
-            if (file_exists($probableConfig.'.dist')) {
-                return $probableConfig.'.dist';
+            foreach (['.xml', '.xml.dist', '.dist.xml'] as $suffix) {
+                if (file_exists($candidate = $probableConfig.$suffix)) {
+                    return $candidate;
+                }
             }
 
             return null;
@@ -67,7 +67,7 @@ $getEnvVar = static function ($name, $default = false) use ($argv) {
             }
         }
 
-        $phpunitConfigFilename = $phpunitConfigFilename ?: $getPhpUnitConfig('phpunit.xml');
+        $phpunitConfigFilename = $phpunitConfigFilename ?: $getPhpUnitConfig('phpunit');
 
         if ($phpunitConfigFilename) {
             $phpunitConfig = new DOMDocument();
