@@ -218,9 +218,7 @@ if (!file_exists("$PHPUNIT_DIR/$PHPUNIT_VERSION_DIR/phpunit") || $configurationH
         'requires' => ['php' => '*'],
     ];
 
-    $stableVersions = array_filter($info['versions'], static function ($v) {
-        return !preg_match('/-dev$|^dev-/', $v);
-    });
+    $stableVersions = array_filter($info['versions'], static fn ($v) => !preg_match('/-dev$|^dev-/', $v));
 
     if (!$stableVersions) {
         $passthruOrFail("$COMPOSER create-project --ignore-platform-reqs --no-install --prefer-dist --no-scripts --no-plugins --no-progress -s dev phpunit/phpunit $PHPUNIT_VERSION_DIR \"$PHPUNIT_VERSION.*\"");
