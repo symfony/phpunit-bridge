@@ -4,7 +4,9 @@ Test NoAssertionsTestRisky risky test
 <?php if ('\\' === DIRECTORY_SEPARATOR && !extension_loaded('mbstring')) die('Skipping on Windows without mbstring');
 --FILE--
 <?php
-$test =  realpath(__DIR__.'/FailTests/NoAssertionsTestRisky.php');
+putenv('SYMFONY_DEPRECATIONS_SERIALIZE');
+putenv('SYMFONY_EXPECTED_DEPRECATIONS_SERIALIZE');
+$test = realpath(__DIR__.'/FailTests/NoAssertionsTestRisky.php');
 passthru('php '.getenv('SYMFONY_SIMPLE_PHPUNIT_BIN_DIR').'/simple-phpunit.php --fail-on-risky --colors=never '.$test);
 ?>
 --EXPECTF--
