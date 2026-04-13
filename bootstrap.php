@@ -18,7 +18,7 @@ if (class_exists(PHPUnit\Metadata\Metadata::class)) {
 }
 
 // Detect if we need to serialize deprecations to a file.
-if (\in_array(\PHP_SAPI, ['cli', 'phpdbg'], true) && $file = getenv('SYMFONY_DEPRECATIONS_SERIALIZE')) {
+if (in_array(\PHP_SAPI, ['cli', 'phpdbg'], true) && $file = getenv('SYMFONY_DEPRECATIONS_SERIALIZE')) {
     DeprecationErrorHandler::collectDeprecations($file);
 
     return;

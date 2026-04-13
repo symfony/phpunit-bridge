@@ -52,7 +52,7 @@ $getEnvVar = static function ($name, $default = false) use ($argv) {
                 break;
             }
             // long option
-            if ('--configuration' === $cliArgument && \array_key_exists($cliArgumentIndex + 1, $argv)) {
+            if ('--configuration' === $cliArgument && array_key_exists($cliArgumentIndex + 1, $argv)) {
                 $phpunitConfigFilename = $getPhpUnitConfig($argv[$cliArgumentIndex + 1]);
                 break;
             }
@@ -116,15 +116,15 @@ $COMPOSER_JSON = getenv('COMPOSER') ?: 'composer.json';
 
 $root = __DIR__;
 while (!file_exists($root.'/'.$COMPOSER_JSON) || file_exists($root.'/DeprecationErrorHandler.php')) {
-    if ($root === \dirname($root)) {
+    if ($root === dirname($root)) {
         break;
     }
-    $root = \dirname($root);
+    $root = dirname($root);
 }
 
 $oldPwd = getcwd();
 $PHPUNIT_DIR = rtrim($getEnvVar('SYMFONY_PHPUNIT_DIR', $root.'/vendor/bin/.phpunit'), '/'.\DIRECTORY_SEPARATOR);
-$PHP = \defined('PHP_BINARY') ? \PHP_BINARY : 'php';
+$PHP = defined('PHP_BINARY') ? \PHP_BINARY : 'php';
 $PHP = escapeshellarg($PHP);
 if ('phpdbg' === \PHP_SAPI) {
     $PHP .= ' -qrr';
@@ -177,16 +177,16 @@ if ($prevCacheDir) {
 $SYMFONY_PHPUNIT_REMOVE = $getEnvVar('SYMFONY_PHPUNIT_REMOVE', 'phpspec/prophecy');
 $SYMFONY_PHPUNIT_REQUIRE = $getEnvVar('SYMFONY_PHPUNIT_REQUIRE', '');
 $configurationHash = md5(implode(\PHP_EOL, [md5_file(__FILE__), $SYMFONY_PHPUNIT_REMOVE, $SYMFONY_PHPUNIT_REQUIRE, (int) $PHPUNIT_REMOVE_RETURN_TYPEHINT]));
-$PHPUNIT_VERSION_DIR = \sprintf('phpunit-%s-%d', $PHPUNIT_VERSION, $PHPUNIT_REMOVE_RETURN_TYPEHINT);
+$PHPUNIT_VERSION_DIR = sprintf('phpunit-%s-%d', $PHPUNIT_VERSION, $PHPUNIT_REMOVE_RETURN_TYPEHINT);
 if (!file_exists("$PHPUNIT_DIR/$PHPUNIT_VERSION_DIR/phpunit") || $configurationHash !== @file_get_contents("$PHPUNIT_DIR/.$PHPUNIT_VERSION_DIR.md5")) {
     // Build a standalone phpunit without symfony/yaml nor prophecy by default
 
     @mkdir($PHPUNIT_DIR, 0o777, true);
     chdir($PHPUNIT_DIR);
     if (file_exists("$PHPUNIT_VERSION_DIR")) {
-        passthru(\sprintf('\\' === \DIRECTORY_SEPARATOR ? 'rmdir /S /Q %s 2> NUL' : 'rm -rf %s', escapeshellarg("$PHPUNIT_VERSION_DIR.old")));
+        passthru(sprintf('\\' === \DIRECTORY_SEPARATOR ? 'rmdir /S /Q %s 2> NUL' : 'rm -rf %s', escapeshellarg("$PHPUNIT_VERSION_DIR.old")));
         rename("$PHPUNIT_VERSION_DIR", "$PHPUNIT_VERSION_DIR.old");
-        passthru(\sprintf('\\' === \DIRECTORY_SEPARATOR ? 'rmdir /S /Q %s' : 'rm -rf %s', escapeshellarg("$PHPUNIT_VERSION_DIR.old")));
+        passthru(sprintf('\\' === \DIRECTORY_SEPARATOR ? 'rmdir /S /Q %s' : 'rm -rf %s', escapeshellarg("$PHPUNIT_VERSION_DIR.old")));
     }
 
     $info = [];
@@ -207,7 +207,7 @@ if (!file_exists("$PHPUNIT_DIR/$PHPUNIT_VERSION_DIR/phpunit") || $configurationH
         }
     }
 
-    if (\in_array('--colors=never', $argv, true) || (isset($argv[$i = array_search('never', $argv, true) - 1]) && '--colors' === $argv[$i])) {
+    if (in_array('--colors=never', $argv, true) || (isset($argv[$i = array_search('never', $argv, true) - 1]) && '--colors' === $argv[$i])) {
         $COMPOSER .= ' --no-ansi';
     } else {
         $COMPOSER .= ' --ansi';
@@ -244,9 +244,9 @@ if (!file_exists("$PHPUNIT_DIR/$PHPUNIT_VERSION_DIR/phpunit") || $configurationH
     }
     if (file_exists($path = $root.'/vendor/symfony/phpunit-bridge')) {
         $haystack = "$PHPUNIT_DIR/$PHPUNIT_VERSION_DIR";
-        $rootLen = \strlen($root);
+        $rootLen = strlen($root);
 
-        $p = ($rootLen <= \strlen($haystack) ? str_repeat('../', substr_count($haystack, '/', $rootLen)) : '').'vendor/symfony/phpunit-bridge';
+        $p = ($rootLen <= strlen($haystack) ? str_repeat('../', substr_count($haystack, '/', $rootLen)) : '').'vendor/symfony/phpunit-bridge';
         if (realpath($p) === realpath($path)) {
             $path = $p;
         }
@@ -322,7 +322,7 @@ if (!file_exists("$PHPUNIT_DIR/$PHPUNIT_VERSION_DIR/phpunit") || $configurationH
 chdir($PHPUNIT_DIR);
 if ('\\' === \DIRECTORY_SEPARATOR) {
     passthru('rmdir /S /Q phpunit 2> NUL');
-    passthru(\sprintf('mklink /j phpunit %s > NUL 2>&1', escapeshellarg($PHPUNIT_VERSION_DIR)));
+    passthru(sprintf('mklink /j phpunit %s > NUL 2>&1', escapeshellarg($PHPUNIT_VERSION_DIR)));
 } else {
     if (file_exists('phpunit')) {
         @unlink('phpunit');
@@ -352,7 +352,7 @@ if (isset($argv[1]) && is_dir($argv[1]) && !file_exists($argv[1].'/phpunit.xml.d
 
     foreach ($finder as $file => $fileInfo) {
         if ('phpunit.xml.dist' === $file) {
-            $components[] = \dirname($fileInfo->getPathname());
+            $components[] = dirname($fileInfo->getPathname());
         }
     }
     if ($components) {
@@ -360,7 +360,7 @@ if (isset($argv[1]) && is_dir($argv[1]) && !file_exists($argv[1].'/phpunit.xml.d
     }
 }
 
-$cmd[0] = \sprintf('%s %s --colors=%s', $PHP, escapeshellarg("$PHPUNIT_DIR/$PHPUNIT_VERSION_DIR/phpunit"), '' === $getEnvVar('NO_COLOR', '') ? 'always' : 'never');
+$cmd[0] = sprintf('%s %s --colors=%s', $PHP, escapeshellarg("$PHPUNIT_DIR/$PHPUNIT_VERSION_DIR/phpunit"), '' === $getEnvVar('NO_COLOR', '') ? 'always' : 'never');
 $cmd = str_replace('%', '%%', implode(' ', $cmd)).' %1$s';
 
 if ('\\' === \DIRECTORY_SEPARATOR) {
@@ -386,7 +386,7 @@ if ($components) {
 
         $c = escapeshellarg($component);
 
-        if ($proc = proc_open(\sprintf($cmd, $c, " > $c/phpunit.stdout 2> $c/phpunit.stderr"), [], $pipes)) {
+        if ($proc = proc_open(sprintf($cmd, $c, " > $c/phpunit.stdout 2> $c/phpunit.stderr"), [], $pipes)) {
             $runningProcs[$component] = $proc;
         } else {
             $exit = 1;
@@ -409,7 +409,7 @@ if ($components) {
             }
         }
 
-        if (!$terminatedProcs && 1 === \count($runningProcs)) {
+        if (!$terminatedProcs && 1 === count($runningProcs)) {
             $component = key($runningProcs);
 
             $output = file_get_contents("$component/phpunit.stdout");
@@ -422,7 +422,7 @@ if ($components) {
                 echo "\033[41mTimeout\033[0m $component\n\n";
 
                 if ('\\' === \DIRECTORY_SEPARATOR) {
-                    exec(\sprintf('taskkill /F /T /PID %d 2>&1', $procStatus['pid']), $output, $exitCode);
+                    exec(sprintf('taskkill /F /T /PID %d 2>&1', $procStatus['pid']), $output, $exitCode);
                 } else {
                     proc_terminate(current($runningProcs));
                 }
@@ -440,7 +440,7 @@ if ($components) {
             // STATUS_STACK_BUFFER_OVERRUN (-1073740791/0xC0000409)
             // STATUS_ACCESS_VIOLATION (-1073741819/0xC0000005)
             // STATUS_HEAP_CORRUPTION (-1073740940/0xC0000374)
-            if ($procStatus && ('\\' !== \DIRECTORY_SEPARATOR || !\extension_loaded('apcu') || !filter_var(\ini_get('apc.enable_cli'), \FILTER_VALIDATE_BOOLEAN) || !\in_array($procStatus, [-1073740791, -1073741819, -1073740940]))) {
+            if ($procStatus && ('\\' !== \DIRECTORY_SEPARATOR || !extension_loaded('apcu') || !filter_var(ini_get('apc.enable_cli'), \FILTER_VALIDATE_BOOLEAN) || !in_array($procStatus, [-1073740791, -1073741819, -1073740940]))) {
                 $exit = $procStatus;
                 echo "\033[41mKO\033[0m $component\n\n";
             } else {
