@@ -110,7 +110,7 @@ class CoverageListener implements TestListener
         }
 
         // Exclude internal classes; PHPUnit 9.1+ is picky about tests covering, say, a \RuntimeException
-        $covers = array_filter($covers, function (string $class) {
+        $covers = array_filter($covers, static function (string $class) {
             $reflector = new \ReflectionClass($class);
 
             return $reflector->isUserDefined();

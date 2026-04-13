@@ -20,9 +20,9 @@ final class AppService
     {
         $args = [__FUNCTION__, __FUNCTION__];
         if ($useContracts) {
-            trigger_deprecation('App', '3.0', sprintf('%s is deprecated, use %s_new instead.', ...$args));
+            trigger_deprecation('App', '3.0', \sprintf('%s is deprecated, use %s_new instead.', ...$args));
         } else {
-            @trigger_error(sprintf('Since App 3.0: %s is deprecated, use %s_new instead.', ...$args), \E_USER_DEPRECATED);
+            @trigger_error(\sprintf('Since App 3.0: %s is deprecated, use %s_new instead.', ...$args), \E_USER_DEPRECATED);
         }
     }
 

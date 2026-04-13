@@ -96,7 +96,7 @@ class DeprecationErrorHandler
     public static function collectDeprecations($outputFile)
     {
         $deprecations = [];
-        $previousErrorHandler = set_error_handler(function ($type, $msg, $file, $line, $context = []) use (&$deprecations, &$previousErrorHandler) {
+        $previousErrorHandler = set_error_handler(static function ($type, $msg, $file, $line, $context = []) use (&$deprecations, &$previousErrorHandler) {
             if (\E_USER_DEPRECATED !== $type && \E_DEPRECATED !== $type && (\E_WARNING !== $type || false === strpos($msg, '" targeting switch is equivalent to "break'))) {
                 if ($previousErrorHandler) {
                     return $previousErrorHandler($type, $msg, $file, $line, $context);
@@ -119,7 +119,7 @@ class DeprecationErrorHandler
             return null;
         });
 
-        register_shutdown_function(function () use ($outputFile, &$deprecations) {
+        register_shutdown_function(static function () use ($outputFile, &$deprecations) {
             file_put_contents($outputFile, serialize($deprecations));
         });
     }
@@ -311,7 +311,7 @@ class DeprecationErrorHandler
      */
     private function displayDeprecations($groups, $configuration)
     {
-        $cmp = function ($a, $b) {
+        $cmp = static function ($a, $b) {
             return $b->count() - $a->count();
         };
 
@@ -399,7 +399,7 @@ class DeprecationErrorHandler
                     $frame['object']->getConvertWarningsToExceptions()
                 );
             } elseif (ErrorHandler::class === $eh && $frame['object'] instanceof TestCase) {
-                return function (int $errorNumber, string $errorString, string $errorFile, int $errorLine) {
+                return static function (int $errorNumber, string $errorString, string $errorFile, int $errorLine) {
                     ErrorHandler::instance()($errorNumber, $errorString, $errorFile, $errorLine);
 
                     return true;
@@ -407,7 +407,7 @@ class DeprecationErrorHandler
             }
         }
 
-        return function () { return false; };
+        return static function () { return false; };
     }
 
     /**

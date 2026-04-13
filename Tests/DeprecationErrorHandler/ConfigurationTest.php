@@ -245,7 +245,7 @@ class ConfigurationTest extends TestCase
         $groups = $this->buildGroups($deprecationsPerType);
 
         foreach ($expected as $groupName => $tolerates) {
-            $this->assertSame($tolerates, $configuration->toleratesForGroup($groupName, $groups), sprintf('Deprecation type "%s" is %s', $groupName, $tolerates ? 'tolerated' : 'not tolerated'));
+            $this->assertSame($tolerates, $configuration->toleratesForGroup($groupName, $groups), \sprintf('Deprecation type "%s" is %s', $groupName, $tolerates ? 'tolerated' : 'not tolerated'));
         }
     }
 
@@ -512,7 +512,7 @@ class ConfigurationTest extends TestCase
         $filename = $this->createFile();
         unlink($filename);
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage(sprintf('The baselineFile "%s" does not exist.', $filename));
+        $this->expectExceptionMessage(\sprintf('The baselineFile "%s" does not exist.', $filename));
         Configuration::fromUrlEncodedString('baselineFile='.urlencode($filename));
     }
 
@@ -592,7 +592,7 @@ class ConfigurationTest extends TestCase
         $filename = $this->createFile();
         unlink($filename);
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage(sprintf('The ignoreFile "%s" does not exist.', $filename));
+        $this->expectExceptionMessage(\sprintf('The ignoreFile "%s" does not exist.', $filename));
         Configuration::fromUrlEncodedString('ignoreFile='.urlencode($filename));
     }
 
