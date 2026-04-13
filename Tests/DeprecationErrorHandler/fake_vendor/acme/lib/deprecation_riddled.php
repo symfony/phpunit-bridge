@@ -10,16 +10,16 @@
  */
 
 eval(<<<'EOPHP'
-namespace PHPUnit\Util;
+    namespace PHPUnit\Util;
 
-class Test
-{
-    public static function getGroups()
+    class Test
     {
-        return array();
+        public static function getGroups()
+        {
+            return array();
+        }
     }
-}
-EOPHP
+    EOPHP
 );
 
 @trigger_error('root deprecation', \E_USER_DEPRECATED);
