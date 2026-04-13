@@ -474,7 +474,7 @@ class ConfigurationTest extends TestCase
         $trace[2] = [
             'class' => DebugClassLoader::class,
             'function' => 'testBaselineGenerationWithDeprecationTriggeredByDebugClassLoader',
-            'args' => [self::class]
+            'args' => [self::class],
         ];
 
         $deprecation = new Deprecation('Deprecation by debug class loader', $trace, '');
@@ -526,7 +526,7 @@ class ConfigurationTest extends TestCase
         $this->expectExceptionMessageMatches('/[Ff]ailed to open stream: Permission denied/');
 
         set_error_handler(static function (int $errno, string $errstr, ?string $errfile = null, ?int $errline = null): bool {
-            if ($errno & (E_WARNING | E_WARNING)) {
+            if ($errno & (\E_WARNING | \E_WARNING)) {
                 throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
             }
 

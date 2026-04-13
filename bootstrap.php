@@ -14,14 +14,14 @@ use Doctrine\Deprecations\Deprecation;
 use Symfony\Bridge\PhpUnit\DeprecationErrorHandler;
 
 // Detect if we need to serialize deprecations to a file.
-if (\in_array(\PHP_SAPI, ['cli', 'phpdbg'], true) && $file = getenv('SYMFONY_DEPRECATIONS_SERIALIZE')) {
+if (in_array(\PHP_SAPI, ['cli', 'phpdbg'], true) && $file = getenv('SYMFONY_DEPRECATIONS_SERIALIZE')) {
     DeprecationErrorHandler::collectDeprecations($file);
 
     return;
 }
 
 // Detect if we're loaded by an actual run of phpunit
-if (!\defined('PHPUNIT_COMPOSER_INSTALL') && !class_exists(\PHPUnit\TextUI\Command::class, false)) {
+if (!defined('PHPUNIT_COMPOSER_INSTALL') && !class_exists(PHPUnit\TextUI\Command::class, false)) {
     return;
 }
 
