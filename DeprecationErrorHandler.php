@@ -302,9 +302,7 @@ class DeprecationErrorHandler
      */
     private function displayDeprecations(array $groups, Configuration $configuration): void
     {
-        $cmp = static function ($a, $b) {
-            return $b->count() - $a->count();
-        };
+        $cmp = static fn ($a, $b) => $b->count() - $a->count();
 
         if ($configuration->shouldWriteToLogFile()) {
             if (false === $handle = @fopen($file = $configuration->getLogFile(), 'a')) {
@@ -398,7 +396,7 @@ class DeprecationErrorHandler
             }
         }
 
-        return static function () { return false; };
+        return static fn () => false;
     }
 
     /**
