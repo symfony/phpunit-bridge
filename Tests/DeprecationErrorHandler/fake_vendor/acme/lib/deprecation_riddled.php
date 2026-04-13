@@ -35,3 +35,6 @@ class FooTestCase
 $foo = new FooTestCase();
 $foo->testLegacyFoo();
 $foo->testNonLegacyBar();
+
+// @php-cs-fixer-ignore error_suppression Explicit trigger_error tests
+// @php-cs-fixer-ignore psr_autoloading
